@@ -7,9 +7,10 @@ services:
       target: build
     volumes:
       - ./:/go/app
-    command: realize start
+    command: realize start --server
     ports:
-      - 8080:8080
+      - "8080:8080"
+      - "5002:5002"
     env_file: .dev.env
   db:
     image: mysql:5.7
