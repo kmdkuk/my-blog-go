@@ -9,10 +9,11 @@ func SetUpRouting() *gin.Engine {
 	r := gin.Default()
 	base := r.Group("/api/v1")
 	a := base.Group("/articles")
-	a.GET("", controller.ArticleController.Index)
-	a.GET("/:id", controller.ArticleController.Show)
-	a.POST("", controller.ArticleController.Create)
-	a.PUT("/:id", controller.ArticleController.Update)
-	a.DELETE("/:id", controller.ArticleController.Delete)
+	articleController := controller.NewArticleController()
+	a.GET("", articleController.Index)
+	a.GET("/:id", articleController.Show)
+	a.POST("", articleController.Create)
+	a.PUT("/:id", articleController.Update)
+	a.DELETE("/:id", articleController.Delete)
 	return r
 }

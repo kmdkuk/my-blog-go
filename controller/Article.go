@@ -6,13 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-var ArticleController Article
-
-func init() {
-	ArticleController = NewArticle()
-}
-
-type Article interface {
+type ArticleController interface {
 	Index(c *gin.Context)
 	Create(c *gin.Context)
 	Show(c *gin.Context)
@@ -20,24 +14,25 @@ type Article interface {
 	Delete(c *gin.Context)
 }
 
-type article struct{}
-
-func NewArticle() Article {
-	return &article{}
+type articleController struct {
 }
 
-func (a article) Index(c *gin.Context) {
+func NewArticleController() ArticleController {
+	return &articleController{}
+}
+
+func (a articleController) Index(c *gin.Context) {
 	c.String(http.StatusInternalServerError, "not implemented")
 }
-func (a article) Create(c *gin.Context) {
+func (a articleController) Create(c *gin.Context) {
 	c.String(http.StatusInternalServerError, "not implemented")
 }
-func (a article) Show(c *gin.Context) {
+func (a articleController) Show(c *gin.Context) {
 	c.String(http.StatusInternalServerError, "not implemented")
 }
-func (a article) Update(c *gin.Context) {
+func (a articleController) Update(c *gin.Context) {
 	c.String(http.StatusInternalServerError, "not implemented")
 }
-func (a article) Delete(c *gin.Context) {
+func (a articleController) Delete(c *gin.Context) {
 	c.String(http.StatusInternalServerError, "not implemented")
 }

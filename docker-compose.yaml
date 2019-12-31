@@ -10,3 +10,18 @@ services:
     command: realize start
     ports:
       - 8080:8080
+    env_file: .dev.env
+  db:
+    image: mysql:5.7
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    restart: always
+    env_file: .dev.env
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./sql:/sql
+
+volumes:
+  mysql-data:
+    driver: local
