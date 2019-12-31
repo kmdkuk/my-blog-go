@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/kmdkuk/my-blog-go/domain/repository"
 )
 
 type ArticleController interface {
@@ -15,20 +16,28 @@ type ArticleController interface {
 }
 
 type articleController struct {
+	articleRepository repository.ArticleRepository
 }
 
-func NewArticleController() ArticleController {
-	return &articleController{}
+func NewArticleController(articleRepository repository.ArticleRepository) ArticleController {
+	return &articleController{articleRepository: articleRepository}
 }
 
 func (a articleController) Index(c *gin.Context) {
-	c.String(http.StatusInternalServerError, "not implemented")
+	articles, _ := a.articleRepository.FindAll()
+	c.JSON(http.StatusOK, articles)
 }
 func (a articleController) Create(c *gin.Context) {
 	c.String(http.StatusInternalServerError, "not implemented")
 }
 func (a articleController) Show(c *gin.Context) {
-	c.String(http.StatusInternalServerError, "not implemented")
+	id := c.Param("id")
+	article, err := a.articleRepository.FindByID(id)
+	if err != nil {
+		c.String(http.StatusNotFound, err.Error())
+		return
+	}
+	c.JSON(http.StatusOK, article)
 }
 func (a articleController) Update(c *gin.Context) {
 	c.String(http.StatusInternalServerError, "not implemented")
